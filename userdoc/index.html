@@ -1,0 +1,135 @@
+<html>
+<body>
+<title>Tegaki User Documentation</title>
+</head>
+
+<h1>Tegaki user documentation</h1>
+
+<p>Tegaki is an ongoing project which aims to develop a free and open-source modern implementation of handwriting recognition software, specifically designed for Chinese (simplified and traditional) and Japanese, and that is suitable for both the desktop and mobile devices.</p>
+
+<h2>1. Packages</h2>
+
+<p>Tegaki is composed of the following packages:</p>
+
+<ul>
+<li>tegaki-recognize: handwriting recognition for the desktop.</li>
+<li>tegaki-train: character editor and training manager.</li>
+<li>scim-tegaki: handwriting recognition for SCIM.</li>
+<li>tegaki-tools: tools for advanced users and developers.</li>
+</ul>
+
+<p>In addition, all these packages depend on the following two base libraries:</p>
+
+<ul>
+<li>tegaki-python: base Python library.</li>
+<li>tegaki-pygtk: base user interface library.</li>
+</ul>
+
+<h2>2. Installing the software</h2>
+
+<h3>2.1. Windows</h3>
+
+<p>The recommended way to install Tegaki in Windows is to use our Windows installer. It installs <em>tegaki-python</em>, <em>tegaki-pygtk</em>, <em>tegaki-recognize</em>, <em>zinnia</em> and <em>wagomu</em>. After that, install your models of interest (see section 3) and you should be ready to use Tegaki.</p>
+
+<h3>2.2. Mac OS X</h3>
+
+<p>The recommended way to install Tegaki in Mac OS X is to use our .dmg image. It provides <em>tegaki-python</em>, <em>tegaki-pygtk</em>, <em>tegaki-recognize</em>, <em>zinnia</em> and <em>wagomu</em>. After opening the image, you can drag the Tegaki icon to the dock or the Applications folder.</p>
+
+<p>Tegaki on Mac OS X requires that X11 is installed on your system. If that is not the case yet, you may install it from the MacOS X install disc (it is located in System/Installation/Packages/X11User.pkg) or from <a href="http://www.apple.com/downloads/macosx/apple/macosx_updates/x11formacosx.html" title="link to X11">Apple's website</a>. After that, install your models of interest (see section 3) and you should be ready to use Tegaki.</p>
+
+<h3>2.3. From source</h3>
+
+<p>On UNIX and UNIX-like systems, it's recommended to install Tegaki from your distribution but if you can't find it or are looking for the newest version, you may install it from source. Start by installing <em>tegaki-python</em> and <em>tegaki-pygtk</em>, which are required by all other packages, then proceed to the installation of the desired packages. A README file describing the software dependencies as well as the commands that need to be entered is present in all packages.</p>
+
+<h2>3. Installing models</h2>
+
+<p>When you are done installing Tegaki, you still need to install models for the recognition engine to be able to operate. We currently provide models for Japanese, Simplified Chinese and Traditional Chinese. Pick up the ones that you need! Models are recognition engine specific. Currently available recognition engines are <em>zinnia</em> and <em>wagomu</em>.</p>
+
+<p>To install a model:</p>
+
+<ul>
+<li>Download the archive</li>
+<li>Uncompress it</li>
+<li>Copy the .model and .meta files to the expected folder</li>
+</ul>
+
+<p>The expected folder depends on your system and the recognition engine:</p>
+
+<ul>
+<li>on <em>Windows</em>: C:\Program Files\tegaki-recognize\models\[recognizer-name]\</li>
+<li>on <em>Mac OS X</em>: /Library/Application Support/tegaki/models/[recognizer-name]/</li>
+<li>on <em>UNIX</em>: /usr/share/tegaki/models/[recognizer-name]/</li>
+</ul>
+
+<p>where you need to replace [recognizer-name] by either <em>zinnia</em> or <em>wagomu</em>.</p>
+
+<h2>4. Main applications</h2>
+
+<h3>4.1. tegaki-recognize</h3>
+
+<p>tegaki-recognize is the main program to recognize handwriting. It comes in two modes: smart and simple. In <em>smart</em> mode, two drawing boxes let you write characters continuously and thus allow you to write full words or sentences. In <em>simple</em> mode, there is only one drawing box and thus you can only write one character at a time. While the smart mode is the default one, the simple mode can be enabled when tegaki-recognize is invoked with the --simple option.</p>
+
+<h3>4.2. tegaki-train</h3>
+
+<p>Although several general models are available for download on the Tegaki website, there may be times when you need to create your own models. Possible reasons include:</p>
+
+<ul>
+<li>available models don't contain characters that you need</li>
+<li>available models perform poorly with your handwriting</li>
+</ul>
+
+<p>tegaki-train is a character editor and training manager which allows you to create custom models, possibly tailored at your handwriting. tegaki-train's user interface is divided into two zones. On the left is the character set list: this is the list of characters that will be included in your model. On the right is the character sample view: it allows you to add one or more character samples per character. As a general rule, the more character samples you add per character, the better.</p>
+
+<p>Character samples edited with tegaki-train can be saved as individual character files or as character collection files. Since model files are not editable, it is important to always save edited character samples as character collections.</p>
+
+<h2>5. Engines</h2>
+
+<p>Tegaki needs so-called engines to operate. Engines are made of two parts: a recognizer and a trainer. The recognizer uses a handwriting model to, oh surprise, recognize handwritten characters. The trainer's role is to create such a model from a set of handwritten character samples. </p>
+
+<p>Currently two engines are supported in Tegaki:</p>
+
+<ul>
+<li>zinnia</li>
+<li>wagomu</li>
+</ul>
+
+<p>Each engine has its own strengths and weaknesses. You are encouraged to try both and see which one works best for your handwriting or come up best with your expectations. Because they are made differently, you may also use one engine when the other fails to recognize a character.</p>
+
+<h2>6. Models</h2>
+
+<p>Models are composed of two files: a .model file and a .meta file.</p>
+
+<p>.model files are read-only and contain the data necessary for the recognizer to operate. They are architecture-dependent, meaning that a model made on an architecture will not work on another architecture. Models available for download on Tegaki's website are made for little-endian architecture (Intel, AMD, ARM etc).</p>
+
+<p>.meta files are writable and contain parameters about the model. Some parameters are mandatory, some optionals. Some parameters are common to all engines, some are specific.</p>
+
+<h3>6.1. Model paramaters</h3>
+
+<p>Parameters which are common to all engines include:</p>
+
+<ul>
+<li>name: a unique name identifying your model</li>
+<li>shortname: a shorter name (up to 3 characters) that may be used when space is restricted</li>
+<li>language: the language of the model (e.g. ja, zh_CN), if applicable</li>
+</ul>
+
+<h2>7. tegaki-tools</h2>
+
+<p>tegaki-tools are tools aimed for advanced users or developers.</p>
+
+<h3>7.1. tegaki-convert</h3>
+
+<p>tegaki-convert lets you convert, concatenate, trim down, filter character collection files.</p>
+
+<h3>7.2. tegaki-build</h3>
+
+<p>tegaki-build lets you build a model from one or more character collection files.</p>
+
+<h3>7.3. tegaki-eval</h3>
+
+<p>tegaki-eval lets you evaluate the performance of a model against one or more character collection files.</p>
+
+<h3>7.4. tegaki-render</h3>
+
+<p>tegaki-render lets you convert an individual character file to an image or video. Currently supported output formats include PNG, PDF, SVG and animated GIF. Examples of output are available <a href="http://mblondel.org/images/tegaki-render/" title="link to output examples">here</a>.</p>
+</html>
